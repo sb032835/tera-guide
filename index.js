@@ -492,7 +492,7 @@ class TeraGuide{
                 dispatch.toClient('S_PLAY_SOUND', 1, {
                     SoundID: event['id']
                 });
-            });
+            }, (event['delay'] || 0 ) / speed);
         }
 
         // Stop timer handler
