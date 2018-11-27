@@ -1,13 +1,13 @@
 {
 	"files": {
 		"LICENSE": "7f2ae2125b491e75c546a5d538f82ad4431d5d6b1bbd4aea724864a21daeca63",
-		"config.json": "9946cc6e60ff14e0fb03cbd65652066d664488fe3bbd8660f9e606218068dff7",
-		"guides/9034.js": "f1127876faafa7baafa2d70bbeb801e2a2932a4e839642d75b06d8336da2ba23",
-		"guides/9720.js": "abdb59678e5a2cc840dce24062978c7db6c7ecd829f5dd1f2cd9096f0abdf3ba",
-		"guides/9920.js": "57158c8c6d9d71b603f2be99a0b73ee131eb8220eb326054305bb85d6fa323c0",
-		"index.js": "24e65464b8ec489fba4eaace66b442bde7b0a8ab872712e12bebe34c6e85cef2",
+		"config.json": "b56701c0166c8ce6fa8e22c7b9d775ae2797ead50411acec53d5a9a13431b115",
+		"guides/9034.js": "cb8acd28306a0700db113195550e5db744e3ad635273b632713ff0ab492e81cb",
+		"guides/9720.js": "97e22d38be7eef7329f8dc66b6d21eca6acaa02cfec3450a24934ae9e83d85ca",
+		"guides/9920.js": "02948b350cbcb93e1ad593d40fd4d5f2cecae6b4a1c3ae726a99d25e6c35d087",
+		"index.js": "5bceec138685e1b348b3f8a20de6b42899e9339f8a128b3d850fb2c7a7db08ee",
 		"module.json": "e6143345af145d39fa9fd0eaf9a57f0014ca92da2c5fb7cc6f702c4e383e1817",
-		"readme.md": "8110ef6f79bec1026c5f3ea49371fee09669107490ebf30cc5dcb2dec746164f"
+		"readme.md": "3c0ded06da2ddec3677075a85a16c328829a52f0d394830c76dbeea879f2a01a"
 	},
 	"defs": {
 		"S_ABNORMALITY_BEGIN": [2,3],
