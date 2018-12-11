@@ -40,6 +40,10 @@ class DispatchWrapper {
         for(const hook of this._hooks) this._dispatch.unhook(hook);
     }
 
+    get require() {
+        return this._dispatch.require;
+    }
+	
     toServer(...args) { return this.send(...args); }
     toClient(...args) { return this.send(...args); }
     send(...args) { return this._dispatch.send(...args); }
@@ -49,7 +53,7 @@ class DispatchWrapper {
 class TeraGuide{
     constructor(dispatch) {
         const fake_dispatch = new DispatchWrapper(dispatch);
-        const { player, entity, library, effect } = require('library')(dispatch);
+        const { player, entity, library, effect } = dispatch.require.library;
         const command = dispatch.command;
 
         // An object of types and their corresponding function handlers
@@ -74,7 +78,7 @@ class TeraGuide{
         let active_guide = {};
 
         // All of the timers, where the key is the id
-        let random_timer_id = 0xFFFFFFFAn; // Used if no id is specified
+        let random_timer_id = 0xFFFFFFFA; // Used if no id is specified
         let timers = {};
 
         /** HELPER FUNCTIONS **/
@@ -418,7 +422,7 @@ class TeraGuide{
         // Text handler
         function text_handler(event, ent, speed=1.0) {
             // Fetch the message(with region tag)
-            const message = event[`message_${dispatch.base.region}`] || event[`message_${dispatch.base.region.toUpperCase()}`] || event['message'];
+            const message = event[`message_${dispatch.region}`] || event[`message_${dispatch.region.toUpperCase()}`] || event['message'];
             // Make sure sub_type is defined
             if(!event['sub_type']) return debug_message(true, "Text handler needs a sub_type");
             // Make sure message is defined
@@ -432,6 +436,16 @@ class TeraGuide{
                     sending_event = {
                         message,
                         type: 41,
+                        chat: false,
+                        channel: 0
+                    };
+                    break;
+                }
+                // If it's type situation, it's S_DUNGEON_EVENT_MESSAGE with type 49
+                case "situation": {
+                    sending_event = {
+                        message,
+                        type: 49,
                         chat: false,
                         channel: 0
                     };
@@ -470,6 +484,7 @@ class TeraGuide{
             	if (!stream) {
 	                switch(event['sub_type']) {
 	                    case "message": return dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, sending_event);
+				case "situation": return dispatch.toClient('S_DUNGEON_EVENT_MESSAGE', 2, sending_event);
 	                    case "notification": return dispatch.toClient('S_CHAT', 2, sending_event);
 	                }
             	} else {
