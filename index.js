@@ -149,13 +149,17 @@ class TeraGuide{
         }
 
         // Handle events such as boss skill and abnormalities triggered
-         function handle_event(ent, id, called_from_identifier, prefix_identifier, d, speed=1.0, stage=false) {
+        function handle_event(ent, id, called_from_identifier, prefix_identifier, d, speed=1.0, stage=false) {
             const unique_id = `${prefix_identifier}-${ent['huntingZoneId']}-${ent['templateId']}`;
             const key = `${unique_id}-${id}`;
-
+            const stage_string = (stage===false ? '' : `-${stage}`);
 
             debug_message(d, `${called_from_identifier}: ${id} | Started by: ${unique_id} | key: ${key + stage_string}`);
 
+            if(stage !== false) {
+                const entry = active_guide[key + stage_string];
+                if(entry) start_events(entry, ent, speed);
+            }
 
 
 
