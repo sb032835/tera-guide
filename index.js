@@ -364,7 +364,8 @@ class TeraGuide{
             const despawn_event = {
                 gameId: item_unique_id,
                 unk: 0, // used in S_DESPAWN_BUILD_OBJECT
-                collected: false // used in S_DESPAWN_COLLECTION
+                collected: false, // used in S_DESPAWN_COLLECTION
+				type: 1
             };
 
             // Create the sending event
@@ -405,6 +406,25 @@ class TeraGuide{
                     });
                     break;
                 }
+				// If it's type npc, it's S_SPAWN_NPC
+                case "npc": {
+                    Object.assign(sending_event, {
+                        templateId: event['id'],
+                        huntingZoneId: 1023,
+                        visible: true,
+						villager: true,
+						spawnType: 1,
+						replaceId: 0,
+						spawnScript: 0,
+						replaceDespawnScript: 0,
+						aggressive: false,
+						owner: 6969,
+						repairable: false,
+						unkn1: false,
+						npcName: ''
+                    });
+                    break;
+                }				
                 // If we haven't implemented the sub_type the event asks for
                 default: {
                     return debug_message(true, "Invalid sub_type for spawn handler:", event['sub_type']);
@@ -417,6 +437,7 @@ class TeraGuide{
                     case "collection": return dispatch.toClient('S_SPAWN_COLLECTION', 4, sending_event);
                     case "item": return dispatch.toClient('S_SPAWN_DROPITEM', 6, sending_event);
                     case "build_object": return dispatch.toClient('S_SPAWN_BUILD_OBJECT', 2, sending_event);
+					case "npc": return dispatch.toClient('S_SPAWN_NPC', 10, sending_event);
                 }
             }, event['delay'] || 0 / speed);
 
@@ -426,6 +447,7 @@ class TeraGuide{
                     case "collection": return dispatch.toClient('S_DESPAWN_COLLECTION', 2, despawn_event);
                     case "item": return dispatch.toClient('S_DESPAWN_DROPITEM', 4, despawn_event);
                     case "build_object": return dispatch.toClient('S_DESPAWN_BUILD_OBJECT', 2, despawn_event);
+					case "npc": return dispatch.toClient('S_DESPAWN_NPC', 3, despawn_event);
                 }
             }, event['sub_delay'] / speed);
         }
