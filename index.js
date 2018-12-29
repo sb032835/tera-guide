@@ -334,7 +334,7 @@ class TeraGuide{
             // Make sure id is defined
             if(!event['id']) return debug_message(true, "Spawn handler needs a id");
 			//
-			if(!event['hz']) return debug_message(true, "Spawn handler needs a hz");
+			//if(!event['hz']) return debug_message(true, "Spawn handler needs a hz");
             // Make sure sub_delay is defined
             if(!event['sub_delay']) return debug_message(true, "Spawn handler needs a sub_delay");
             // Make sure distance is defined
@@ -412,7 +412,7 @@ class TeraGuide{
                 case "npc": {
                     Object.assign(sending_event, {
                         templateId: event['id'],
-                        huntingZoneId: event['hz'],
+                        huntingZoneId: 1023,//event['hz'],
                         visible: true,
 						villager: true,
 						spawnType: 1,
