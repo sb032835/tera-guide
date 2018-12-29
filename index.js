@@ -333,8 +333,6 @@ class TeraGuide{
         function spawn_handler(event, ent, speed=1.0) {
             // Make sure id is defined
             if(!event['id']) return debug_message(true, "Spawn handler needs a id");
-			//
-			//if(!event['hz']) return debug_message(true, "Spawn handler needs a hz");
             // Make sure sub_delay is defined
             if(!event['sub_delay']) return debug_message(true, "Spawn handler needs a sub_delay");
             // Make sure distance is defined
@@ -372,7 +370,7 @@ class TeraGuide{
 
             // Create the sending event
             switch(sub_type) {
-                // If it's type collection, it's S_SPAWN_COLLECTION
+                // If it's type collection, it's S_SPAWN_COLLECTION	
                 case "collection": {
                     Object.assign(sending_event, {
                         id: event['id'],
@@ -412,7 +410,7 @@ class TeraGuide{
                 case "npc": {
                     Object.assign(sending_event, {
                         templateId: event['id'],
-                        huntingZoneId: 1023,//event['hz'],
+                        huntingZoneId: event['hz'],
                         visible: true,
 						villager: true,
 						spawnType: 1,
