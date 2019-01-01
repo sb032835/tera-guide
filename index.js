@@ -352,7 +352,7 @@ class TeraGuide{
             // if pos is set, we use that
             if(event['pos']) loc = event['pos'];
 
-            loc.w = ent['loc'].w + event['offset'] || 0;
+            loc.w = (ent['loc'].w || 0) + (event['offset'] || 0);
             library.applyDistance(loc, event['distance'] || 0);
 
             let sending_event = {
