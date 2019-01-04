@@ -354,13 +354,21 @@ class TeraGuide{
 
             loc.w = (ent['loc'].w || 0) + (event['offset'] || 0);
             library.applyDistance(loc, event['distance'] || 0);
-
+			
+///測試			
+			loc.z += 10;
+			let sending_event = {
+				gameId: item_unique_id,
+				loc: { x: loc.x, y: loc.y, z: loc.z },
+				w: loc.w
+			};			
+/*
             let sending_event = {
                 gameId: item_unique_id,
                 loc: loc,
                 w: loc.w
             };
-
+*/
             const despawn_event = {
                 gameId: item_unique_id,
                 unk: 0, // used in S_DESPAWN_BUILD_OBJECT
@@ -407,11 +415,12 @@ class TeraGuide{
                     break;
                 }
 				// If it's type npc, it's S_SPAWN_NPC
-                case "npc": {
-                    Object.assign(sending_event, {
-                        templateId: event['id'],
-                        huntingZoneId: event['hz'],
-                        visible: true,
+				case "npc": {
+					Object.assign(sending_event, {
+						templateId: event['id'],
+						huntingZoneId: event['hz'],
+						status: 0,
+						visible: true,
 						villager: true,
 						spawnType: 1,
 						replaceId: 0,
@@ -422,9 +431,9 @@ class TeraGuide{
 						repairable: false,
 						unkn1: false,
 						npcName: ''
-                    });
-                    break;
-                }				
+					});
+					break;
+				}			
                 // If we haven't implemented the sub_type the event asks for
                 default: {
                     return debug_message(true, "Invalid sub_type for spawn handler:", event['sub_type']);
