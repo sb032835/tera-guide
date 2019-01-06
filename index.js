@@ -355,25 +355,23 @@ class TeraGuide{
             loc.w = (ent['loc'].w || 0) + (event['offset'] || 0);
             library.applyDistance(loc, event['distance'] || 0);
 			
-///測試			
-			loc.z += 10;
-			let sending_event = {
+
+			let sending_event_laser = {	// for bahaar's laser
 				gameId: item_unique_id,
-				loc: { x: loc.x, y: loc.y, z: loc.z },
 				w: loc.w
 			};			
-/*
+
             let sending_event = {
                 gameId: item_unique_id,
                 loc: loc,
                 w: loc.w
             };
-*/
+
             const despawn_event = {
                 gameId: item_unique_id,
                 unk: 0, // used in S_DESPAWN_BUILD_OBJECT
                 collected: false, // used in S_DESPAWN_COLLECTION
-				type: 1
+				type: 1	// used in S_DESPAWN_NPC
             };
 
             // Create the sending event
@@ -419,7 +417,6 @@ class TeraGuide{
 					Object.assign(sending_event, {
 						templateId: event['id'],
 						huntingZoneId: event['hz'],
-						status: 0,
 						visible: true,
 						villager: true,
 						spawnType: 1,
@@ -433,7 +430,27 @@ class TeraGuide{
 						npcName: ''
 					});
 					break;
-				}			
+				}
+				// If it's type npc, it's S_SPAWN_NPC for bahaar's laser
+				case "laser": {
+					Object.assign(sending_event_laser, {
+						templateId: event['id'],
+						huntingZoneId: event['hz'],
+						loc: { x: loc.x, y: loc.y, z: loc.z + event['z'] },
+						visible: true,
+						villager: true,
+						spawnType: 1,
+						replaceId: 0,
+						spawnScript: 0,
+						replaceDespawnScript: 0,
+						aggressive: false,
+						owner: 6969,
+						repairable: false,
+						unkn1: false,
+						npcName: ''
+					});
+					break;
+				}				
                 // If we haven't implemented the sub_type the event asks for
                 default: {
                     return debug_message(true, "Invalid sub_type for spawn handler:", event['sub_type']);
@@ -447,6 +464,7 @@ class TeraGuide{
                     case "item": return dispatch.toClient('S_SPAWN_DROPITEM', 6, sending_event);
                     case "build_object": return dispatch.toClient('S_SPAWN_BUILD_OBJECT', 2, sending_event);
 					case "npc": return dispatch.toClient('S_SPAWN_NPC', 10, sending_event);
+					case "laser": return dispatch.toClient('S_SPAWN_NPC', 10, sending_event_laser);
                 }
             }, event['delay'] || 0 / speed);
 
@@ -457,6 +475,7 @@ class TeraGuide{
                     case "item": return dispatch.toClient('S_DESPAWN_DROPITEM', 4, despawn_event);
                     case "build_object": return dispatch.toClient('S_DESPAWN_BUILD_OBJECT', 2, despawn_event);
 					case "npc": return dispatch.toClient('S_DESPAWN_NPC', 3, despawn_event);
+					case "laser": return dispatch.toClient('S_DESPAWN_NPC', 3, despawn_event);
                 }
             }, event['sub_delay'] / speed);
         }
