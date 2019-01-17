@@ -463,8 +463,8 @@ class TeraGuide{
                     case "collection": return dispatch.toClient('S_SPAWN_COLLECTION', 4, sending_event);
                     case "item": return dispatch.toClient('S_SPAWN_DROPITEM', 6, sending_event);
                     case "build_object": return dispatch.toClient('S_SPAWN_BUILD_OBJECT', 2, sending_event);
-					case "npc": return dispatch.toClient('S_SPAWN_NPC', 10, sending_event);
-					case "laser": return dispatch.toClient('S_SPAWN_NPC', 10, sending_event_laser);
+					case "npc": return dispatch.toClient('S_SPAWN_NPC', 11, sending_event);
+					case "laser": return dispatch.toClient('S_SPAWN_NPC', 11, sending_event_laser);
                 }
             }, event['delay'] || 0 / speed);
 
